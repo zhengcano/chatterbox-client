@@ -10,6 +10,7 @@
     <script src="bower_components/underscore/underscore-min.js"></script>
     <!-- your scripts -->
     <script src="env/config.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Arvo:400,700|Muli:300' rel='stylesheet' type='text/css'>
     <script src="scripts/app.js"></script>
   </head>
   <body>
@@ -17,17 +18,23 @@
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
       <div class="chat">
-        <div id="chats">
+        <div class="roomSelect">
+        <span>
+        Enter a chat room
+        </span>
         </div>
+        <div id="chats">
+        </div>w
       </div>
+      <div class="box">
       <form>
         <label>Type a message</label>
         <input type="text" id="message"></input>
-        <label>Enter a Room</label>
+        <label class="enter">Enter a Room</label>
         <input type="text" id="roomput"></input>
         <button id="submit">submit</button>
       </form>
-      <div class="roomSelect"></div>
+      </div>
     </div>
   </body>
 </html>

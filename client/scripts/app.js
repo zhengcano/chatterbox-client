@@ -7,6 +7,8 @@ var openRooms = {};
 var currentRoom = null;
 var friends = {};
 
+var scrollPosition = $('document').height();
+
 app.init = function(){
 };
 
@@ -77,22 +79,22 @@ app.update = function(data) {
         if (!openRooms.hasOwnProperty(room)){
           room = room.replace(/<[^>]*>/g, "<nice try>");
           openRooms[room] = true;
-          var $room = $('<div class="roomname" id="'+room+'">'+room+'</div>');
+          var $room = $('<div class="roomname" id="'+room+'">'+'# '+room+'</div>');
           $('.roomSelect').append($room);
           $('.roomname').on("click", function(){
             currentRoom = $(this).attr('id');
-            $('h1').text(currentRoom);
-            $('#roomput').fadeOut();
+            $('h1').text('#' + currentRoom);
+            $('#roomput, .enter').fadeOut();
             if (currentRoom === "lobby"){
               currentRoom = null;
-              $('h1').text('Chatterbox');
+              $('h1').text('#Chatterbox');
               $('#roomput').fadeIn();
             }
             $('.chatBox').remove();
           });
         }
         var name = userName
-        var userName = $('<span>'+name+' says: </span>');
+        var userName = $('<span class="user">'+name+' says: </span>');
         var text = $('<span>'+message+' in '+room+'</span>')
         if (friends[name] === true){
           text.addClass('friend');
@@ -112,6 +114,8 @@ app.update = function(data) {
     }
   }
   lastDate = data.results[0].createdAt;
+  $("#chats").animate({ scrollTop: scrollPosition }, "slow");
+  scrollPosition += 100;
   //$('#chats').empty();
 }
 app.room =function(data) {

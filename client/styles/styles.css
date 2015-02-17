@@ -1,29 +1,34 @@
 body {
-    background: #eee;
+    background: #2daebf;
     text-align: center;
     padding: 0 25px;
-    font-family: arial, sans-serif;
+    font-family: 'Muli', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: rgba(255,255,255, 1);
+    background-image: url('../images/bg.png');
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 #main {
-    width: 500px;
+    width: 800px;
     margin: auto;
     text-align: left;
-    background: white;
     padding: 50px 60px;
-    border: solid #ddd;
-    border-width: 0 1px 1px 1px;
 }
 
 #main h1 {
+    color: rgba(255,255,255, 1);
     margin-top: 0;
+    font-family: 'Arvo', serif;
+    font-weight: 400;
     font-size: 35px;
     margin-bottom: 5px;
     padding: 5px;
 }
 
 #main h1 span {
-    font-style:italic;
 }
 
 #main ul {
@@ -59,21 +64,21 @@ form input[type=text] {
     padding: 5px;
 }
 
-.chat {
-    height: 400px;
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: #eee;
+#chats {
+    width: 570px;
+    height: 420px;
+    float: right;
     overflow-y: auto;
     overflow-x: hidden;
+}
+.chat {
+    height: 500px;
+    padding: 5px;
+    margin-bottom: 5px;
 }
 
 .chat .username {
     font-weight: 800;
-}
-
-.chat:hover {
-    background-color: #ddd;
 }
 
 .spinner {
@@ -88,29 +93,93 @@ form input[type=text] {
 
 .chatBox {
     max-width: 460px;
-    min-height: 25px;
-    margin: 15px auto 0px auto;
+    min-height: 5px;
+    margin: 8px auto;
+    padding: 10px 0px 10px 20px;
+    border-left: 5px solid rgba(255,255,255, 0.6);
+    font-family: 'Muli', sans-serif, Helvetica;
+    font-weight: 200;
+    font-size: 14px;
+    letter-spacing: 1;
     position: relative;
     display: block;
-    border-bottom: 1px dotted #c0c0c0;
-}
-.chatBox {
-    font-family: helvetica;
-    font-size: 13px;
-    letter-spacing: 1;
 }
 .roomSelect {
-    width: 460px;
-    min-height: 50px;
-    margin: 0px auto;
-    position: relative;
+    width: 180px;
+    height: 450px;
+    margin:0;
+    padding: 30px;
+    background-color: #FFF;
+    float: left;
+    position:absolute;
     display: block;
+}
+.roomSelect span {
+    color: #2daebf;
+    font-weight: 400x;
 }
 .roomname{
     margin: 10px;
+    color: #2daebf;
+    font-size: 12px;
     position: relative;
     display: block;
+    transition: 1s;
+}
+.roomname:hover{
+    color: #2b546e;
 }
 .friend{
-    font-weight: 700;
+    font-family: 'Arvo', serif;
+}
+.box {
+    width: 800px;
+    margin: 15px
+}
+label {
+    display: block;
+    color: #565656;
+    margin: 10px 0px;
+}
+input[type="text"] {
+  padding: 10px;
+  border: solid 5px #c9c9c9;
+  transition: border 0.3s;
+}
+input[type="text"]:focus,
+input[type="text"].focus {
+  border: solid 5px #969696;
+}
+.user {
+    font-family: 'Arvo', serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: 1s;
+}
+.user:hover {
+    color: #2b546e;
+    opacity: 0.6;
+}
+#footer {
+    background-color: #f4f4f4;
+    width: 100%;
+    height: 300px;
+}
+#submit {
+  font-family: 'Muli', sans-serif;
+  color: #ffffff;
+  font-size: 14px;
+  background: #238896;
+  margin: 10px;
+  padding: 10px 20px 10px 20px;
+  -webkit-box-shadow: none;
+  border: 0;
+  float: right;
+  text-decoration: none;
+  display: block;
+}
+
+#submit:hover {
+  background: #2b546e;
+  text-decoration: none;
 }

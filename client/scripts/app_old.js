@@ -8,7 +8,7 @@ $(function(){
 
   //Update chatterbox messages
   setInterval(function(){
-    var scrollPosition = $('.chat').height();
+    var scrollPosition = $('document').height();
     //console.log('hi');
     $.ajax({
       // always use this url
@@ -33,7 +33,7 @@ $(function(){
               if (!openRooms.hasOwnProperty(room)){
                 room = room.replace(/<[^>]*>/g, "<nice try>");
                 openRooms[room] = true;
-                var $room = $('<div class="roomname" id="'+room+'">'+room+'</div>');
+                var $room = $('<div class="roomname" id="'+room+'">'+ '# '+room+'</div>');
                 $('.rooms').append($room);
                 $('.roomname').on("click", function(){
                   currentRoom = $(this).attr('id');
@@ -63,7 +63,7 @@ $(function(){
       }
     });
     // if ($(".chat").scrollTop() === scrollPosition){
-    //$(".chat").animate({ scrollTop: $(".chat").height() }, "slow");
+    $(".chat").animate({ scrollTop: $(".chat").height() }, "slow");
     // }
   }, 1000);
 
