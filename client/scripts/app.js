@@ -5,6 +5,7 @@ app.server = 'https://api.parse.com/1/classes/chatterbox';
 var lastDate = 0;
 var openRooms = {};
 var currentRoom = null;
+var friends = {};
 
 app.init = function(){
 };
@@ -24,9 +25,6 @@ app.send = function(message){
       console.error('chatterbox: Failed to send message');
     }
   });
-  var holder = '<div class="chatBox">'+ message.username + ' says: '+ message.text + ' : ' + message.roomname + '</div>';
-  $('#chats').prepend(holder);
-  //console.log(holder);
 };
 
 app.fetch = function(){
@@ -57,24 +55,6 @@ app.clearMessages = function(){
 };
 
 app.addMessage = function(message) {
-   $.ajax({
-    // always use this url
-    url: this.server,
-    type: 'POST',
-    data: JSON.stringify(message),
-    contentType: 'application/json',
-    success: function (data) {
-
-      console.log('chatterbox: Message sent');
-    },
-    error: function (data) {
-      // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-      console.error('chatterbox: Failed to send message');
-    }
-  });
-  var holder = '<div class="chatBox">'+ message.username + ' says: '+ message.text + ' : ' + message.roomname + '</div>';
-  $('#chats').prepend(holder);
-  //console.log(holder);
   app.send(message);
 };
 
@@ -94,10 +74,39 @@ app.update = function(data) {
       && userName !== undefined && typeof userName !== 'function') {
         message = message.replace(/<[^>]*>/g, "<nice try>");
         userName = userName.replace(/<[^>]*>/g, "<nice try>");
-        // If chatroom = null
+        if (!openRooms.hasOwnProperty(room)){
+          room = room.replace(/<[^>]*>/g, "<nice try>");
+          openRooms[room] = true;
+          var $room = $('<div class="roomname" id="'+room+'">'+room+'</div>');
+          $('.roomSelect').append($room);
+          $('.roomname').on("click", function(){
+            currentRoom = $(this).attr('id');
+            $('h1').text(currentRoom);
+            $('#roomput').fadeOut();
+            if (currentRoom === "lobby"){
+              currentRoom = null;
+              $('h1').text('Chatterbox');
+              $('#roomput').fadeIn();
+            }
+            $('.chatBox').remove();
+          });
+        }
+        var name = userName
+        var userName = $('<span>'+name+' says: </span>');
+        var text = $('<span>'+message+' in '+room+'</span>')
+        if (friends[name] === true){
+          text.addClass('friend');
+        }
+        userName.click(function(){
+          friends[name] = true;
+        });
+        console.log(friends);
         if (currentRoom === null || currentRoom === room){
-          var holder = '<div class="chatBox">' + userName + ' says: ' + message + ' : ' + room + '</div>';
-          $('#chats').append(holder);
+          var $holder = $('<div class="chatBox"></div>');
+          $holder.append(userName);
+          $holder.append(text);
+          $('#chats').append($holder);
+          console.log('hi');
         }
       }
     }
@@ -106,8 +115,9 @@ app.update = function(data) {
   //$('#chats').empty();
 }
 app.room =function(data) {
-  
+
 };
+
 setInterval(app.room, 1000);
 //submit
 $(document).ready(function(){
@@ -115,6 +125,9 @@ $(document).ready(function(){
       var name = window.location.search.slice(10);
       var text = $("#message").val();
       var roomput = $("#roomput").val();
+      if (currentRoom !== null){
+        roomput = currentRoom;
+      }
       var message = {
         'username': name,
         'text': text,
