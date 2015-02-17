@@ -57,18 +57,14 @@ app.clearMessages = function(){
 };
 
 app.addMessage = function(message) {
-  app.send(message);
-};
-
-app.addRoom = function(roomname){
-  /*
-  $.ajax({
+   $.ajax({
     // always use this url
     url: this.server,
     type: 'POST',
-    data: JSON.stringify(roomname),
+    data: JSON.stringify(message),
     contentType: 'application/json',
     success: function (data) {
+
       console.log('chatterbox: Message sent');
     },
     error: function (data) {
@@ -76,13 +72,19 @@ app.addRoom = function(roomname){
       console.error('chatterbox: Failed to send message');
     }
   });
-*/
+  var holder = '<div class="chatBox">'+ message.username + ' says: '+ message.text + ' : ' + message.roomname + '</div>';
+  $('#chats').prepend(holder);
+  //console.log(holder);
+  app.send(message);
+};
+
+app.addRoom = function(roomname){
   $('#roomSelect').prepend('<div>' + roomname + '</div>');
 };
 
 app.update = function(data) {
   // console.log(data);
-  for(var i = 20; i>=0; i--){
+  for(var i = 10; i>=0; i--){
     var room = data.results[i].roomname;
     var message = data.results[i].text;
     var userName = data.results[i].username;
@@ -92,23 +94,6 @@ app.update = function(data) {
       && userName !== undefined && typeof userName !== 'function') {
         message = message.replace(/<[^>]*>/g, "<nice try>");
         userName = userName.replace(/<[^>]*>/g, "<nice try>");
-        if (!openRooms.hasOwnProperty(room)){
-          room = room.replace(/<[^>]*>/g, "<nice try>");
-          openRooms[room] = true;
-          var $room = $('<div class="roomname" id="'+room+'">'+room+'</div>');
-          $('.rooms').append($room);
-          $('.roomname').on("click", function(){
-            currentRoom = $(this).attr('id');
-            $('h1').text(currentRoom);
-            $('#roomput').fadeOut();
-            if (currentRoom === "lobby"){
-              currentRoom = null;
-              $('h1').text('Chatterbox');
-              $('#roomput').fadeIn();
-            }
-            $('.chatBox').remove();
-          });
-        }
         // If chatroom = null
         if (currentRoom === null || currentRoom === room){
           var holder = '<div class="chatBox">' + userName + ' says: ' + message + ' : ' + room + '</div>';
@@ -118,20 +103,27 @@ app.update = function(data) {
     }
   }
   lastDate = data.results[0].createdAt;
+  //$('#chats').empty();
 }
+app.room =function(data) {
+  
+};
+setInterval(app.room, 1000);
 //submit
-$('#submit').on('click', function(e) {
-    var name = window.location.search.slice(10);
-    var text = $("#message").val();
-    var roomput = $("#roomput").val();
-    var message = {
-      'username': name,
-      'text': text,
-      'roomname': roomput
-    };
-    $("#message, #roomput").val("");
-    app.addMessage(message);
-    //console.log(message);
-    e.preventDefault();
-    //e.stopPropagation();
+$(document).ready(function(){
+  $('#submit').on('click', function(e) {
+      var name = window.location.search.slice(10);
+      var text = $("#message").val();
+      var roomput = $("#roomput").val();
+      var message = {
+        'username': name,
+        'text': text,
+        'roomname': roomput
+      };
+      app.addMessage(message);
+      $("#message, #roomput").val("");
+      //console.log(message);
+      e.preventDefault();
+      //e.stopPropagation();
+  });
 });

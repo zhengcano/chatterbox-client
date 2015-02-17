@@ -94,7 +94,8 @@ $(function(){
         console.error('chatterbox: Failed to send message');
       }
     });
-    e.preventDefault();
+    //e.preventDefault();
+    e.defaultPrevented();
 
   });
 
