@@ -60,9 +60,12 @@ form input[type=text] {
 }
 
 .chat {
+    height: 400px;
     padding: 5px;
     margin-bottom: 5px;
     background-color: #eee;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .chat .username {
@@ -81,4 +84,30 @@ form input[type=text] {
 
 .spinner img {
     padding: 10px;
+}
+
+.chatBox {
+    max-width: 460px;
+    min-height: 25px;
+    margin: 15px auto 0px auto;
+    position: relative;
+    display: block;
+    border-bottom: 1px dotted #c0c0c0;
+}
+.chatBox {
+    font-family: helvetica;
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.rooms {
+    width: 460px;
+    min-height: 50px;
+    margin: 0px auto;
+    position: relative;
+    display: block;
+}
+.roomname{
+    margin: 10px;
+    position: relative;
+    display: block;
 }
